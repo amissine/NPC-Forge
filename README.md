@@ -77,7 +77,7 @@ I am developing NPC-Forge with the conviction that democratic and sustainable us
 
 Or are you just going to sit there waiting for the water to reach the boiling point?
 
-The following list contains the contributors that with their support, expertise, kindness and talent are making NPC-Forge and TERMy better by the day:
+The following list contains the contributors; with their support, expertise, kindness and talent NPC-Forge and TERMy are getting better by the day:
 [Fred Larsen](https://github.com/fredilarsen), [Kevin Mathis](https://github.com/KMathisGit), [LordEnd13](https://github.com/LordEnd13), [David Starkweather](https://github.com/starkdg) 
 
 ### License
