@@ -7,7 +7,7 @@ Related work: https://github.com/gioblu/NPC-Forge/
 Compliant implementations: NPC-Forge 0.0 and following
 Released into the public domain
 
-15/11/2026 0.0 - First draft
+15/08/2026 0.0 - First draft
 ```
 
 This document describes the dataset conventions specified by **NDF 0.0 (NPC-Forge Dataset Format)**. which enable efficient organization, curation and categorization of deterministic agents behavior:
