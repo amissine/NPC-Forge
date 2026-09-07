@@ -105,5 +105,31 @@
             }
         ],
         "permission": "yolo"
+    },
+    {
+        "category": "utilities",
+        "input": [
+            "what is the weather",
+            "how is the weather looking",
+            "is it raining outside",
+            "check the weather forecast",
+            "show me the weather"
+        ],
+        "tools": [
+            {
+                "name": "run_in_terminal",
+                "arguments": {
+                    "command": "curl -s wttr.in",
+                    "explanation": "Fetches the current weather.",
+                    "goal": "Check weather",
+                    "mode": "sync"
+                }
+            }
+        ],
+        "thinking": [
+            "Let me look out the window for you, <||username||>...",
+            "Checking the sky right now..."
+        ],
+        "permission": "yolo"
     }
 ]
