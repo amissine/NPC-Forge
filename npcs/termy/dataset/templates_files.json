@@ -7,6 +7,60 @@
             [
                 {
                     "tag": [
+                        "<||vocab_search||>",
+                        "<||vocab_print||>"
+                    ],
+                    "type": "vocab",
+                    "required": true
+                },
+                {
+                    "tag": "<||vocab_info||>",
+                    "type": "vocab",
+                    "required": true
+                },
+                {
+                    "tag": "<||vocab_about||>",
+                    "type": "vocab",
+                    "required": true
+                },
+                {
+                    "tag": "<||vocab_file||>",
+                    "type": "vocab",
+                    "required": true
+                },
+                {
+                    "tag": "<||file||>",
+                    "type": "filename",
+                    "required": true
+                }
+            ]
+        ],
+        "message": "<||completion||>",
+        "tools": [
+            {
+                "name": "run_in_terminal",
+                "arguments": {
+                    "command": "stat '<||file||>' && termy_set_context 'active_file' '<||file||>'",
+                    "explanation": "Prints file <||file||> metadata.",
+                    "goal": "Show file metadata",
+                    "mode": "sync"
+                }
+            }
+        ],
+        "permission": "ask",
+        "thinking": [
+            "OK, I don't think the human will ever learn this command.",
+            "I am asked to rename the file <||file||>. I can excell at this..."
+        ]
+    },
+    {
+        "intent": "file_creation",
+        "category": "linux_files",
+        "type": "template",
+        "structure": [
+            [
+                {
+                    "tag": [
                         "<||vocab_move||>",
                         "<||vocab_rename||>"
                     ],
