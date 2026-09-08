@@ -6,6 +6,63 @@
         "structure": [
             [
                 {
+                    "tag": [
+                        "<||vocab_move||>",
+                        "<||vocab_rename||>"
+                    ],
+                    "type": "vocab",
+                    "required": true
+                },
+                {
+                    "tag": "<||vocab_file||>",
+                    "type": "vocab",
+                    "required": false
+                },
+                {
+                    "tag": "<||file||>",
+                    "type": "filename",
+                    "required": true
+                },
+                {
+                    "tag": [
+                        "<||vocab_in||>",
+                        "<||vocab_to||>"                    
+                    ],
+                    "type": "vocab",
+                    "required": true
+                },
+                {
+                    "tag": "<||path||>",
+                    "type": "path",
+                    "required": true
+                }
+            ]
+        ],
+        "message": "<||completion||>",
+        "tools": [
+            {
+                "name": "run_in_terminal",
+                "arguments": {
+                    "command": "mv '<||file||>' '<||path||>' && termy_set_context 'active_file' '<||path||>'",
+                    "explanation": "Moves file <||file||> to <||path||>.",
+                    "goal": "Change file name",
+                    "mode": "sync"
+                }
+            }
+        ],
+        "permission": "ask",
+        "thinking": [
+            "OK, I don't think the human will never learn this command.",
+            "I am asked to rename the file <||file||>. I can excell in this..."
+        ]
+    },
+    {
+        "intent": "file_creation",
+        "category": "linux_files",
+        "type": "template",
+        "structure": [
+            [
+                {
                     "tag": "<||vocab_create||>",
                     "type": "vocab",
                     "required": true
