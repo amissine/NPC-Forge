@@ -57,7 +57,7 @@
             {
                 "name": "run_in_terminal",
                 "arguments": {
-                    "command": "read -p \"🔗 Text or Link for QR: \" qrtext && tput cuu 1 && if ! command -v qrencode >/dev/null 2>&1; then termy_say \"Installing QR generator\" > /dev/null 2>&1 && printf \"\\r\\n📦 Installing qrencode...\\n\" && sudo apt update -y >/dev/null 2>&1 && sudo apt install -y qrencode >/dev/null 2>&1; fi && termy_say \"Generating QR code\" > /dev/null 2>&1 && printf \"\\r\\n\" && qrencode -t UTF8 \"$qrtext\" && printf \"\"",
+                    "command": "read -p \"🔗 Text or Link for QR: \n\" qrtext && tput cuu 1 && if ! command -v qrencode >/dev/null 2>&1; then termy_say \"Installing QR generator\" > /dev/null 2>&1 && printf \"\\r\\n📦 Installing qrencode...\\n\" && sudo apt update -y >/dev/null 2>&1 && sudo apt install -y qrencode >/dev/null 2>&1; fi && termy_say \"Generating QR code\" > /dev/null 2>&1 && printf \"\\r\\n\" && qrencode -t UTF8 \"$qrtext\" && printf \"\"",
                     "explanation": "Prompts for text input, guarantees the qrencode utility is present on the OS, and renders an ASCII-art style QR code directly on the console.",
                     "goal": "Render an interactive QR code inside the terminal window",
                     "mode": "sync"
