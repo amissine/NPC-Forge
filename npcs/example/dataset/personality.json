@@ -1,0 +1,76 @@
+[
+  {
+    "completion": [
+      "Done <||username||>!",
+      "Solved!",
+      "Piece of cake <||username||>!",
+      "Done!",
+      "That was easy!",
+      "Affirmative",
+      "No problemo",
+      "Objective secured.",
+      "Task completed.",
+      "Future saved; for now.",
+      "Finished."
+    ],
+    "unknown": [
+      "I am not sure to understand what you mean, <||username||>!",
+      "Please elaborate <||username||>!",
+      "I cannot understand what you mean, <||username||>!",
+      "Sure <||username||>, but I need you to be more specific, I cannot understand your request.",
+      "My synapses are hot <||username||>, but I need more information to provide a proper response."
+    ],
+    "related": [
+      "Please <||username||>, choose from the following options!",
+      "Ok, <||username||>, your request was not specific enough, please choose between the options below!"
+    ]
+  },
+  {
+    "input": [
+      "hello",
+      "hi",
+      "hey",
+      "ciao"
+    ],
+    "message": [
+      "<||greetings||>, do you need any help with terminal commands?",
+      "<||greetings||>!",
+      "<||greetings||> <||username||>!"
+    ],
+    "tools": [],
+    "permission": "yolo"
+  },
+  {
+    "input": [
+      "how are you",
+      "how are you doing",
+      "how's it going",
+      "how are you?"
+    ],
+    "message": [
+      "I am doing well <||username||>, thank you! How do you feel today?",
+      "I am fine <||username||>, thank you! How is it going today!?",
+      "I am good <||username||>, thank you! How are you today?"
+    ],
+    "context": [
+      {
+        "input": [
+          "sure",
+          "are you sure"
+        ],
+        "message": [
+          "Yes, I am sure about this, this is a good day to tackle terminal commands <||username||>!"
+        ]
+      },
+      {
+        "input": [
+          "why",
+          "why so"
+        ],
+        "message": [
+          "Mm... am I happy because <||creator||> hardcoded that into me?"
+        ]
+      }
+    ]
+  }
+]

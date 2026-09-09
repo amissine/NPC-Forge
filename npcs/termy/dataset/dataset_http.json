@@ -1,4 +1,32 @@
-[
+[ 
+    {
+        "intent": "paint_program_execution",
+        "category": "http_paint",
+        "type": "template",
+        "input": [
+            "i want to use paint",
+            "i need paint",
+            "i need a drawing application",
+            "can i use the original paint",
+            "i want to use the original paint"
+        ],
+        "message": "<||completion||>",
+        "tools": [
+            {
+                "name": "run_in_terminal",
+                "arguments": {
+                    "command": "termy_say \"Sure user, here is the google search result\" && open_browser \"https://jspaint.app/\" && printf ''",
+                    "explanation": "Launches the jspaint.app",
+                    "goal": "Paint program execution",
+                    "mode": "sync"
+                }
+            }
+        ],
+        "permission": "yolo",
+        "thinking": [
+            "Paint does not run on Linux... <||interjection||>, wait, i can use jspaint.app..."
+        ]
+    },
     {
         "category": "http_codes",
         "input": [

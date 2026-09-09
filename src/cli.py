@@ -3,7 +3,10 @@ import glob
 import sys
 import os    
 import subprocess
+import shutil
+import json
 from pathlib import Path
+from datetime import datetime
 
 from FlintNPC import load_json
 
@@ -12,7 +15,7 @@ GREEN = "\033[32m"
 YELLOW = "\033[33m"
 RESET = "\033[0m"
 
-# Standard XDG Directory per l'utente locale
+# Standard XDG Directory for local user
 FORGE_DATA_DIR = Path.home() / ".local" / "share" / "npc-forge"
 LOG_FILE_PATH = FORGE_DATA_DIR / "npc_forge.log"
 SERVICE_NAME = "npc-forge.service"
@@ -66,7 +69,6 @@ def run_framework_tests():
         
     print(f"{YELLOW}[NPC-FORGE]{RESET} Initializing testing pipeline engine from: {GREEN}{test_dir}{RESET}...\n")
     
-    # Prepariamo l'ambiente forzando la root di produzione nel PYTHONPATH di sistema
     current_env = os.environ.copy()
     current_env["PYTHONPATH"] = f"{FORGE_DATA_DIR}:{str(FORGE_DATA_DIR / 'src')}:{current_env.get('PYTHONPATH', '')}"
     
@@ -88,6 +90,55 @@ def run_framework_tests():
         print(f"{RED}[NPC-FORGE]{RESET} Critical failure attempting to invoke testing subprocess: {e}")
         sys.exit(1)
 
+def create_npc(name: str):
+    """Scaffolds a new NPC directory using the example template structure."""
+    name = name.strip().lower()
+    if not name:
+        print(f"{RED}[NPC-FORGE]{RESET} Error: NPC name cannot be empty.")
+        sys.exit(1)
+
+    src_base = FORGE_DATA_DIR / "npcs" / "example"
+    dst_base = FORGE_DATA_DIR / "npcs" / name
+
+    if not src_base.exists():
+        print(f"{RED}[NPC-FORGE]{RESET} Error: Example template missing at '{src_base}'.")
+        sys.exit(1)
+    if dst_base.exists():
+        print(f"{RED}[NPC-FORGE]{RESET} Error: NPC '{name}' already exists.")
+        sys.exit(1)
+
+    print(f"{YELLOW}[NPC-FORGE]{RESET} Scaffolding new NPC: {GREEN}{name}{RESET}...")
+    
+    try:
+        dst_base.mkdir(parents=True)
+        
+        # Read, update, and write the config.json with the new NPC name
+        src_config = src_base / "config.json"
+        if src_config.exists():
+            with open(src_config, "r", encoding="utf-8") as f:
+                config_data = json.load(f)
+        else:
+            config_data = {}
+            
+        config_data["name"] = name
+        
+        with open(dst_base / "config.json", "w", encoding="utf-8") as f:
+            json.dump(config_data, f, indent=4)
+        
+        # Copy dataset and vocabulary files
+        for rel_path in [
+            "dataset/dataset_example.json", "dataset/personality.json",
+            "dataset/templates_example.json", "dataset/types.json",
+            "dataset/vocabulary/templates.json", "dataset/vocabulary/vocabulary.json"
+        ]:
+            dst_file = dst_base / rel_path
+            dst_file.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(src_base / rel_path, dst_file)
+            
+        print(f"{GREEN}[NPC-FORGE]{RESET} Success: NPC '{name}' scaffolded at {dst_base}.")
+    except Exception as e:
+        print(f"{RED}[NPC-FORGE]{RESET} Failed to scaffold NPC: {e}")
+        sys.exit(1)
 
 def install_npc(source_path: str, dev: bool = False):
     """Installs NPC in user space: moves files and executes setup."""
@@ -150,6 +201,7 @@ def print_help():
     {GREEN}restart, reboot{RESET} Restart the background registry service
     {GREEN}logs, watch{RESET}    Stream live logs from the systemd server daemon
     {GREEN}list{RESET}           List all locally installed NPCs and their capabilities
+    {GREEN}create <name>{RESET}  Scaffold a new NPC profile from the example template
     {GREEN}install <path>{RESET} Install an NPC profile from a local directory
     {GREEN}test, tests{RESET}    Run the internal framework test suite
 
@@ -158,51 +210,47 @@ def print_help():
     {GREEN}--dev{RESET}          Install NPC in editable developer mode (used with 'install')
 
 {YELLOW}Examples:{RESET}
+    npc-forge create my_new_npc
     npc-forge install ./npcs/termy --dev
     npc-forge logs
     npc-forge list
 """
     print(help_text)
 
+def format_date(timestamp: float) -> str:
+    """Converts a UNIX timestamp to a standard YYYY-MM-DD date string."""
+    return datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
+
 def list_installed_npcs():
-    """Reads the registry folder and aggregates metrics about installed NPCs"""
+    """Reads the registry folder and aggregates metrics about installed NPCs in a clean table format."""
     npc_base_dir = FORGE_DATA_DIR / "npcs"
     if not npc_base_dir.exists() or not npc_base_dir.is_dir():
-        print(f"No NPCs installed yet.")
+        print("No NPCs installed yet.")
         return
 
     npc_dirs = [d for d in npc_base_dir.iterdir() 
                 if d.is_dir() and d.name != "__pycache__"]
     if not npc_dirs:
-        print(f"No NPCs installed yet.")
+        print("No NPCs installed yet.")
         return
 
-    print(f"\nInstalled NPCs:\n")
-
+    data = []
     for npc_dir in sorted(npc_dirs):
         npc_name = npc_dir.name
         dataset_dir = npc_dir / "dataset"  
         
-        # Extract creator from config
-        creator = "Unknown"
-        
-
         config = load_json(npc_dir, "config.json")
         creator = config.get("creator", "Unknown")
                 
-        personality = load_json(dataset_dir, "personality.json")
+        personality = load_json(dataset_dir, "personality.json") or []
 
         dataset = []
         for f in glob.glob(os.path.join(dataset_dir, "dataset_*.json")):
-            dataset.extend(
-                load_json(dataset_dir, os.path.basename(f))
-            )
+            dataset.extend(load_json(dataset_dir, os.path.basename(f)) or [])
 
         templates = []
         for f in glob.glob(os.path.join(dataset_dir, "templates_*.json")):
-            templates.extend(
-                load_json(dataset_dir, os.path.basename(f))
-            )
+            templates.extend(load_json(dataset_dir, os.path.basename(f)) or [])
 
         merge = personality + dataset + templates
         intent_count = len(merge)
@@ -217,7 +265,6 @@ def list_installed_npcs():
         vocab_size += len(vt) if isinstance(vt, (list, dict)) else 0
         
         # Calculate dataset directory size
-        dataset_dir = npc_dir / "dataset"
         data_size_bytes = 0
         if dataset_dir.exists():
             for file in dataset_dir.rglob("*"):
@@ -225,20 +272,62 @@ def list_installed_npcs():
                     data_size_bytes += file.stat().st_size
         
         if data_size_bytes < 1000000:
-            size_str = f"{data_size_bytes/1024:.1f}KB"
+            size_str = f"{data_size_bytes/1024:.1f} KB"
         else:
-            size_str = f"{data_size_bytes/1024/1024:.2f}MB"
+            size_str = f"{data_size_bytes/1024/1024:.2f} MB"
         
         has_tools = "no"
         if isinstance(merge, list):
-            if any(
-                "tools" in item for item in merge if isinstance(
-                    item, dict
-                )
-            ):
+            if any("tools" in item for item in merge if isinstance(item, dict)):
                 has_tools = "yes"
+        
+        # Get last modified time of the directory as a simple date
+        mod_date = datetime.fromtimestamp(
+            npc_dir.stat().st_mtime
+        ).strftime("%d-%m-%Y %H:%M:%S")
+                
+        data.append({
+            "name": npc_name,
+            "creator": creator,
+            "intents": str(intent_count),
+            "vocab": str(vocab_size),
+            "size": size_str,
+            "tools": has_tools,
+            "modified": mod_date
+        })
+
+    headers = ["NAME", "CREATOR", "INTENTS", "VOCAB", "SIZE", "TOOLS", "MODIFIED"]
+    keys = ["name", "creator", "intents", "vocab", "size", "tools", "modified"]
     
-        print(f"{GREEN}{npc_name}{RESET} (intents: {intent_count}, vocabulary: {vocab_size}, dataset: {size_str}, tools: {has_tools}) by {creator}")
+    # Calculate dynamic column widths based on headers and data
+    col_widths = [len(h) for h in headers]
+    for row in data:
+        for i, k in enumerate(keys):
+            col_widths[i] = max(col_widths[i], len(str(row[k])))
+            
+    # Add padding for readability
+    col_widths = [w + 2 for w in col_widths]
+    
+    # Print header
+    header_str = ""
+    sep_str = ""
+    for i, h in enumerate(headers):
+        header_str += f"{YELLOW}{h:<{col_widths[i]}}{RESET}"
+        sep_str += "-" * col_widths[i]
+        
+    print("\n" + header_str)
+    print(sep_str)
+    
+    # Print rows
+    for row in data:
+        row_str = ""
+        for i, k in enumerate(keys):
+            val = str(row[k])
+            if i == 0: # Highlight the NPC name
+                row_str += f"{GREEN}{val:<{col_widths[i]}}{RESET}"
+            else:
+                row_str += f"{val:<{col_widths[i]}}"
+        print(row_str)
     print()
 
 def main():
@@ -254,6 +343,11 @@ def main():
     elif cmd in ["logs", "watch"]: stream_logs()
     elif cmd in ["test", "tests"]: run_framework_tests()
     elif cmd == "list": list_installed_npcs()
+    elif cmd == "create":
+        if len(sys.argv) < 3:
+            print(f"{RED}Error: Missing NPC name. Usage: npc-forge create <name>{RESET}")
+            sys.exit(1)
+        create_npc(sys.argv[2])
     elif cmd == "install":
         if len(sys.argv) < 3:
             print(f"{RED}Error: Missing target package directory path. Usage: npc-forge install <path> [--dev]{RESET}")
@@ -269,7 +363,7 @@ def main():
         target_path = args_without_dev[2]
         install_npc(target_path, dev=is_dev)
     else:
-        print(f"{RED}Unknown: '{cmd}'. Supported: serve, start, stop, restart, watch, logs, tests, install{RESET}")
+        print(f"{RED}Unknown: '{cmd}'. Supported: serve, start, stop, restart, watch, logs, tests, create, install{RESET}")
         sys.exit(1)
 
 if __name__ == "__main__":

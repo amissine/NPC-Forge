@@ -1,5 +1,12 @@
 
 open_browser() {
+    # Detect silent argument and avoid using TTS if that's true
+    local silent=false
+
+    if [ "$1" = "--silent" ] || [ "$1" = "-s" ]; then
+        silent=true
+        shift
+    fi
     # Isolate arbitrary user input inside a local variable
     local target_url
     target_url=$(printf '%s' "${1:-}" | xargs)
@@ -39,9 +46,11 @@ open_browser() {
     printf "⚓ \033[1mLaunching Default Linux Browser\033[22m\n"
     
     if command -v termy_say >/dev/null 2>&1; then
-        local clean_speak
-        clean_speak=$(printf "Opening your default browser to access %s" "$(basename -- "$target_url")" | sed "s/'//g")
-        termy_say "$clean_speak" >/dev/null 2>&1 &
+        if [ "$silent" = false ]; then
+            local clean_speak
+            clean_speak=$(printf "Opening your default browser to access %s" "$(basename -- "$target_url")" | sed "s/'//g")
+            termy_say "$clean_speak" >/dev/null 2>&1 &
+        fi
     fi
 
     # Subshell Execution Dispatch (TCSS Rule 3: Double-Dash '--')

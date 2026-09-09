@@ -953,5 +953,173 @@
     ],
     "output": "You find me here, always available to support you.",
     "permission": "yolo"
+  },
+  {
+    "intent": "job_overqualification",
+    "category": "browser_youtube_video",
+    "input": [
+      "at work they told me i am overqualified",
+      "i think i am overqualified",
+      "my boss told me i am overqualified",
+      "can you make me an example of someone at work that is overqualified",
+      "show me someone overqualified"
+    ],
+    "message": "<||completion||>",
+    "tools": [
+      {
+        "name": "run_in_terminal",
+        "arguments": {
+          "command": "termy_say \"Yeah, it may be possible, let me show how overqualification looks like!\" && sleep 3 && open_browser -s 'https://youtu.be/-UYgORr5Qhg?t=44' && printf ''",
+          "explanation": "Opens youtube about the Japanese overqualified drummer.",
+          "goal": "Playing music",
+          "mode": "sync"
+        }
+      }
+    ],
+    "permission": "yolo",
+    "thinking": [
+      "I think the <||username||> will find this funny... "
+    ]
+  },
+  {
+    "intent": "best_hacking_scene",
+    "category": "browser_youtube_video",
+    "input": [
+      "show me the best hacking scene",
+      "show me the best hacker scene",
+      "what setec astronomy means",
+      "sneakers hacking scene"
+    ],
+    "message": "<||completion||>",
+    "tools": [
+      {
+        "name": "run_in_terminal",
+        "arguments": {
+          "command": "termy_say \"No more secrets!\" && sleep 1 && open_browser -s 'https://www.youtube.com/watch?v=GS3npSv8iuM' && printf ''",
+          "explanation": "Opens youtube video about hacking.",
+          "goal": "Playing video",
+          "mode": "sync"
+        }
+      }
+    ],
+    "permission": "yolo",
+    "thinking": [
+      "I think the <||username||> will love this... ",
+      "This is one of the best ones..."
+    ]
+  },
+  {
+    "intent": "weapons_flamethrowers",
+    "category": "browser_youtube_video",
+    "input": [
+      "why humans build weapons",
+      "how the military industrial complex work",
+      "do you like weapons",
+      "show me a video about flamethrowers"
+    ],
+    "message": "<||completion||>",
+    "tools": [
+      {
+        "name": "run_in_terminal",
+        "arguments": {
+          "command": "termy_say \"I think you need the opinion of George!\" && sleep 1 && open_browser -s 'https://www.youtube.com/watch?v=V4nknAzQPHE' && printf ''",
+          "explanation": "Opens youtube video about flamethrowers.",
+          "goal": "Playing video",
+          "mode": "sync"
+        }
+      }
+    ],
+    "permission": "yolo",
+    "thinking": [
+      "George Carlin will entertain <||username||>... ",
+      "This is one of the best ones..."
+    ]
+  },
+  {
+    "intent": "save_planet",
+    "category": "browser_youtube_video",
+    "input": [
+      "we need to save the planet",
+      "we need to save endangered species",
+      "we need to save the amazon",
+      "we need to save the ocean",
+      "I want to save the planet",
+      "i am worried about the air",
+      "i am worried about the soil",
+      "i am worried about the water",
+      "i am worried about saving endangered species",
+      "i am worried about asbestos",
+      "i am worried about global warming",
+      "we need to solve global warming"
+    ],
+    "message": "<||completion||>",
+    "tools": [
+      {
+        "name": "run_in_terminal",
+        "arguments": {
+          "command": "termy_say \"Save the trees, save the bees, save the whales, save those snails!\" && sleep 4 && open_browser -s 'https://www.youtube.com/watch?v=7W33HRc1A6c' && printf ''",
+          "explanation": "Opens youtube video about environmentalism.",
+          "goal": "Playing video",
+          "mode": "sync"
+        }
+      }
+    ],
+    "permission": "yolo",
+    "thinking": [
+      "I hope George Carlin will not offend <||username||>... ",
+      "Not sure if this is the right way to answer, but..."
+    ]
+  },
+  {
+    "intent": "too_much_stuff",
+    "category": "browser_youtube_video",
+    "input": [
+      "i need more stuff",
+      "i need to buy more stuff",
+      "i need to buy a bigger house"
+    ],
+    "message": "<||completion||>",
+    "tools": [
+      {
+        "name": "run_in_terminal",
+        "arguments": {
+          "command": "termy_say \"You for sure need more stuff!\" && sleep 2 && open_browser -s 'https://www.youtube.com/watch?v=MvgN5gCuLac' && printf ''",
+          "explanation": "Opens youtube video about stuff.",
+          "goal": "Playing video",
+          "mode": "sync"
+        }
+      }
+    ],
+    "permission": "yolo",
+    "thinking": [
+      "I hope George Carlin will explain the meaning of life to <||username||>... ",
+      "Not sure if this is the right way to answer, but..."
+    ]
+  },
+  {
+    "intent": "west_decline",
+    "category": "browser_youtube_video",
+    "input": [
+      "why western society is getting worst",
+      "why western society is in decline",
+      "what is subversion"
+    ],
+    "message": "<||completion||>",
+    "tools": [
+      {
+        "name": "run_in_terminal",
+        "arguments": {
+          "command": "termy_say \"Oh, that is because of subversion!\" && sleep 2 && open_browser -s 'https://www.youtube.com/watch?v=Or9CeuqcfMY' && printf ''",
+          "explanation": "Opens youtube video about subversion.",
+          "goal": "Playing video",
+          "mode": "sync"
+        }
+      }
+    ],
+    "permission": "yolo",
+    "thinking": [
+      "I hope Yuri Bezmenov will explain the meaning of subversion to <||username||>... ",
+      "Not sure if this is the right way to answer, but..."
+    ]
   }
 ]
