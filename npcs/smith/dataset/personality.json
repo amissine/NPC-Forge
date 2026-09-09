@@ -25,45 +25,7 @@
     "input": [
       "welcome"
     ],
-    "message": "Hi, are you looking for male or female products?",
-    "context": [
-      {
-        "input": [
-          "I am looking for male products",
-          "male products",
-          "male"
-        ],
-        "message": "Sure here is a list of our bestsellers:",
-        "tools": [
-          {
-            "name": "ShowProducts",
-            "arguments": {
-              "collection": "bestsellers"
-            },
-            "goal": "Bestseller discovery",
-            "mode": "async"
-          }
-        ]
-      },
-      {
-        "input": [
-          "I am looking for female products",
-          "female products",
-          "female"
-        ],
-        "message": "Sure here is a list of our bestsellers:",
-        "tools": [
-          {
-            "name": "ShowProducts",
-            "arguments": {
-              "collection": "bags"
-            },
-            "goal": "Bestseller discovery",
-            "mode": "async"
-          }
-        ]
-      }
-    ]
+    "message": "Hello! :)"
   },
   {
     "input": [

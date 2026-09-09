@@ -240,7 +240,7 @@ def list_installed_npcs():
         dataset_dir = npc_dir / "dataset"  
         
         config = load_json(npc_dir, "config.json")
-        creator = config.get("creator", "Unknown") if config else "Unknown"
+        creator = config.get("creator", "Unknown")
                 
         personality = load_json(dataset_dir, "personality.json") or []
 
@@ -308,7 +308,7 @@ def list_installed_npcs():
     # Add padding for readability
     col_widths = [w + 2 for w in col_widths]
     
-    # Print header (Inverted color: YELLOW)
+    # Print header
     header_str = ""
     sep_str = ""
     for i, h in enumerate(headers):
@@ -318,7 +318,7 @@ def list_installed_npcs():
     print("\n" + header_str)
     print(sep_str)
     
-    # Print rows (Inverted color: GREEN for names)
+    # Print rows
     for row in data:
         row_str = ""
         for i, k in enumerate(keys):
