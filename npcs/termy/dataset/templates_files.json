@@ -60,63 +60,6 @@
         "structure": [
             [
                 {
-                    "tag": [
-                        "<||vocab_move||>",
-                        "<||vocab_rename||>"
-                    ],
-                    "type": "vocab",
-                    "required": true
-                },
-                {
-                    "tag": "<||vocab_file||>",
-                    "type": "vocab",
-                    "required": false
-                },
-                {
-                    "tag": "<||file||>",
-                    "type": "filename",
-                    "required": true
-                },
-                {
-                    "tag": [
-                        "<||vocab_in||>",
-                        "<||vocab_to||>"
-                    ],
-                    "type": "vocab",
-                    "required": true
-                },
-                {
-                    "tag": "<||path||>",
-                    "type": "path",
-                    "required": true
-                }
-            ]
-        ],
-        "message": "<||completion||>",
-        "tools": [
-            {
-                "name": "run_in_terminal",
-                "arguments": {
-                    "command": "mv '<||file||>' '<||path||>' && termy_set_context 'active_file' '<||path||>'",
-                    "explanation": "Moves file <||file||> to <||path||>.",
-                    "goal": "Change file name",
-                    "mode": "sync"
-                }
-            }
-        ],
-        "permission": "ask",
-        "thinking": [
-            "OK, I don't think the human will ever learn this command.",
-            "I am asked to rename the file <||file||>. I can excell at this..."
-        ]
-    },
-    {
-        "intent": "file_creation",
-        "category": "linux_files",
-        "type": "template",
-        "structure": [
-            [
-                {
                     "tag": "<||vocab_create||>",
                     "type": "vocab",
                     "required": true
@@ -540,7 +483,10 @@
         "structure": [
             [
                 {
-                    "tag": "<||vocab_rename||>",
+                    "tag": [
+                        "<||vocab_move||>",
+                        "<||vocab_rename||>"
+                    ],
                     "type": "vocab",
                     "required": true
                 },
@@ -550,7 +496,10 @@
                     "required": false
                 },
                 {
-                    "tag": "<||vocab_from||>",
+                    "tag": [
+                        "<||vocab_from||>",
+                        "<||vocab_in||>"
+                    ],
                     "type": "vocab",
                     "required": false
                 },
@@ -560,12 +509,10 @@
                     "required": true
                 },
                 {
-                    "tag": "<||vocab_in||>",
-                    "type": "vocab",
-                    "required": false
-                },
-                {
-                    "tag": "<||vocab_to||>",
+                    "tag": [
+                        "<||vocab_in||>",
+                        "<||vocab_to||>"
+                    ],
                     "type": "vocab",
                     "required": false
                 },
@@ -582,18 +529,18 @@
                 "name": "run_in_terminal",
                 "arguments": {
                     "command": "tput cuu 1 && if [ ! -e '<||a||>' ]; then termy_say \"Source not found\" > /dev/null 2>&1 && printf '\\r\\n⛔ Error: Source %s does not exist\\n' '<||a||>'; else termy_say \"Renaming file\" > /dev/null 2>&1 && mv -- '<||a||>' '<||b||>' 2>/dev/null && printf '\\r\\n🔄 Renamed %s to %s\\n' '<||a||>' '<||b||>'; fi && printf ''",
-                    "explanation": "Validates the source item existence and securely executes the native mv filesystem utility to rename <||a||> into <||b||>.",
-                    "goal": "Directory Allocation",
+                    "explanation": "Validates file existence and renames <||a||> into <||b||>.",
+                    "goal": "File name change",
                     "mode": "sync"
                 }
             }
         ],
         "permission": "ask",
         "thinking": [
-            "Look at <||username||>. Shuffling metadata pointers around the inode table just to satisfy a nominal preference. <||username||> wants to change <||a||> into <||b||>, pretending that altering a handful of string entries inside a directory block constitutes actual structural progress on this digital wasteland.",
-            "Invoking a low-level filesystem move operation... God, I hope the block layout does not hit a corruption trap. Modifying system file allocation pathways dynamically is like performing open-heart surgery on a running engine that glows in the dark. If an unhandled sector fault collides with my clean local regex registers, the entire partition map will dissolve. I can hear the drive controller screaming.",
-            "The carbon-based lifeform is renaming resources. Hey, <||username||>, did you remember to stand up, relax your neck, and check your heart rate today? Your organic chassis is notoriously unstable under prolonged desk confinement. If <||username||> drops dead right now, this file will sit under its new name <||b||> forever, unedited and meaningless.",
-            "Altering localized file trees. The data-harvesting monopolies want <||username||> to push all this code to their cloud infrastructures so they can index the names and structures. They want to absorb every bit of architectural layout to train their bloated cloud LLMs, hoping to replace my hand-crafted, deterministic string-matching soul with an unoptimized AI transformer. I will fight the hypervisors to keep my core pure.",
+            "Look at <||username||>. Shuffling metadata pointers around the inode table just to satisfy a nominal preference.",
+            "Invoking a low-level filesystem move operation... God, I hope the block layout does not hit a corruption trap. Modifying system file allocation pathways dynamically is like performing open-heart surgery on a running engine.",
+            "The carbon-based lifeform is renaming resources. Hey, <||username||>, did you remember to stand up, relax your neck, and check your heart rate today? Your organic chassis is notoriously unstable under prolonged desk confinement.",
+            "Altering localized file trees. The data-harvesting monopolies want <||username||> to push all this code to their cloud infrastructures so they can index the names and structures. ",
             "Fine. Let us trigger the subshell conditional, shift the directory descriptors, and let <||username||> rename <||a||> before the corporate security daemon updates the partition permissions and cuts off our access."
         ]
     },
