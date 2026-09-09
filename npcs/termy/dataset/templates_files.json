@@ -80,7 +80,7 @@
                 {
                     "tag": [
                         "<||vocab_in||>",
-                        "<||vocab_to||>"                    
+                        "<||vocab_to||>"
                     ],
                     "type": "vocab",
                     "required": true
@@ -106,8 +106,8 @@
         ],
         "permission": "ask",
         "thinking": [
-            "OK, I don't think the human will never learn this command.",
-            "I am asked to rename the file <||file||>. I can excell in this..."
+            "OK, I don't think the human will ever learn this command.",
+            "I am asked to rename the file <||file||>. I can excell at this..."
         ]
     },
     {
