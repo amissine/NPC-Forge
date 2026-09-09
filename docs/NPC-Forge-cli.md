@@ -29,7 +29,7 @@ Scaffolds a new NPC profile from the built-in example template. Creates a new di
 npc-forge create my_new_npc
 ```
 
-It is possible to test the newly created NPC executing `npc-forge serve` and then visiting [127.0.0.1:5000/<name>/chat](http://127.0.0.1:5000/<name>/chat).
+It is possible to test the newly created NPC executing `npc-forge serve` and then visiting [127.0.0.1:5000/my_new_npc/chat](http://127.0.0.1:5000/my_new_npc/chat).
 
 #### `install <path> [--dev]`
 Installs an NPC profile from a local directory into the `npc-forge` registry. Copies the entire source directory (datasets, scripts, entry points) to `~/.local/share/npc-forge/npcs/<name>` and executes `setup.sh` if it exists in the source directory. Use `--dev` to pass the developer flag to the setup hook.
