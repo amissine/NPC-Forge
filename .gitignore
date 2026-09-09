@@ -26,3 +26,7 @@ context_memory.json
 
 .DS_Store
 Thumbs.db
+
+# Vim {{{1
+.*.sw?   
+*.session 

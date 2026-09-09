@@ -2,9 +2,9 @@
 
 # NPC-Forge User-Space Installer
 # Usage:
-#   ./install.sh            production copy
-#   ./install.sh --dev      symlink sources (edit-in-place)
-#   ./install.sh --uninstall
+#   ./setup.sh            production copy
+#   ./setup.sh --dev      symlink sources (edit-in-place)
+#   ./setup.sh --uninstall
 
 set -euo pipefail
 

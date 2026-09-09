@@ -1,0 +1,58 @@
+alik@k2:~/NPC-Forge$ termy hi
+
+TERMy | exact match | Confidence: 100.00%
+
+Response: good evening alik! 
+
+alik@k2:~/NPC-Forge$ termy how are you
+
+TERMy | exact match | Confidence: 100.00%
+
+Response: I am fine alik, thank you! How is it going today!? 
+
+alik@k2:~/NPC-Forge$ termy what can you do fo me
+
+TERMy | probabilistic match | Confidence: 100.00%
+
+Response: I am a terminal assistant, I am an expert in terminal commands and I can assist you using the terminal. Feel free to ask me questions, I will try to write for you the terminal command that matches your request. 
+
+alik@k2:~/NPC-Forge$ termy I want to learn this codebase, give me guidelines
+
+TERMy | rejected | Confidence: 0.00%
+
+Response: Please alik, choose from the following options! 
+
+Related intents:
+
+1) how do you learn
+
+digit 1 to 1 or q to quit: 1
+
+TERMy | exact match | Confidence: 100.00%
+
+Response: All the details regarding my training and knowledge are in my training dashboard, I will open it for you! && sleep 5 && ./restart_server.sh && xdg-open http://localhost:8080 
+
+alik@k2:~/NPC-Forge$ curl 'http://localhost:8080'
+curl: (7) Failed to connect to localhost port 8080 after 0 ms: Couldn't connect to server
+alik@k2:~/NPC-Forge$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
