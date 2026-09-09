@@ -1,0 +1,14 @@
+[
+    {
+        "category": "example",
+        "input": [
+            "make me an example",
+            "show me an example",
+            "do you have any example"
+        ],
+        "message": "This is an example!",
+        "thinking": "Come on! Come up with an example, quick...",
+        "tools": [],
+        "permission": "yolo"
+    }
+]

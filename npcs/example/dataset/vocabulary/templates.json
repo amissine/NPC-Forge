@@ -1,0 +1,8 @@
+{
+    "<||vocab_explain||>": ["teach", "explain", "instructions"],
+    "<||vocab_hack||>": ["breach", "compromise", "crack", "hack", "penetrate"],
+    "<||vocab_how||>": ["how"],
+    "<||vocab_print||>": ["print", "prints", "outputs", "display", "displays"],
+    "<||vocab_search||>": ["search", "locate", "show", "query"],
+    "<||vocab_to||>": ["to"]
+}

@@ -22,6 +22,13 @@ npc-forge restart
 
 ### NPC Management
 
+#### `create <name>`
+Scaffolds a new NPC profile from the built-in example template. Creates a new directory at `~/.local/share/npc-forge/npcs/<name>` and populates it with the standard dataset, vocabulary, and configuration files. The `name` property in `config.json` is automatically updated to match the provided name.
+
+```bash
+npc-forge create my_new_npc
+```
+
 #### `install <path> [--dev]`
 Installs an NPC profile from a local directory into the `npc-forge` registry. Copies the entire source directory (datasets, scripts, entry points) to `~/.local/share/npc-forge/npcs/<name>` and executes `setup.sh` if it exists in the source directory. Use `--dev` to pass the developer flag to the setup hook.
 

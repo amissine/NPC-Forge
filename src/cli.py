@@ -88,6 +88,55 @@ def run_framework_tests():
         print(f"{RED}[NPC-FORGE]{RESET} Critical failure attempting to invoke testing subprocess: {e}")
         sys.exit(1)
 
+def create_npc(name: str):
+    """Scaffolds a new NPC directory using the example template structure."""
+    name = name.strip().lower()
+    if not name:
+        print(f"{RED}[NPC-FORGE]{RESET} Error: NPC name cannot be empty.")
+        sys.exit(1)
+
+    src_base = FORGE_DATA_DIR / "npcs" / "example"
+    dst_base = FORGE_DATA_DIR / "npcs" / name
+
+    if not src_base.exists():
+        print(f"{RED}[NPC-FORGE]{RESET} Error: Example template missing at '{src_base}'.")
+        sys.exit(1)
+    if dst_base.exists():
+        print(f"{RED}[NPC-FORGE]{RESET} Error: NPC '{name}' already exists.")
+        sys.exit(1)
+
+    print(f"{YELLOW}[NPC-FORGE]{RESET} Scaffolding new NPC: {GREEN}{name}{RESET}...")
+    
+    try:
+        dst_base.mkdir(parents=True)
+        
+        # Read, update, and write the config.json with the new NPC name
+        src_config = src_base / "config.json"
+        if src_config.exists():
+            with open(src_config, "r", encoding="utf-8") as f:
+                config_data = json.load(f)
+        else:
+            config_data = {}
+            
+        config_data["name"] = name
+        
+        with open(dst_base / "config.json", "w", encoding="utf-8") as f:
+            json.dump(config_data, f, indent=4)
+        
+        # Copy dataset and vocabulary files
+        for rel_path in [
+            "dataset/dataset_example.json", "dataset/personality.json",
+            "dataset/templates_example.json", "dataset/types.json",
+            "dataset/vocabulary/templates.json", "dataset/vocabulary/vocabulary.json"
+        ]:
+            dst_file = dst_base / rel_path
+            dst_file.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(src_base / rel_path, dst_file)
+            
+        print(f"{GREEN}[NPC-FORGE]{RESET} Success: NPC '{name}' scaffolded at {dst_base}.")
+    except Exception as e:
+        print(f"{RED}[NPC-FORGE]{RESET} Failed to scaffold NPC: {e}")
+        sys.exit(1)
 
 def install_npc(source_path: str, dev: bool = False):
     """Installs NPC in user space: moves files and executes setup."""
@@ -150,6 +199,7 @@ def print_help():
     {GREEN}restart, reboot{RESET} Restart the background registry service
     {GREEN}logs, watch{RESET}    Stream live logs from the systemd server daemon
     {GREEN}list{RESET}           List all locally installed NPCs and their capabilities
+    {GREEN}create <name>{RESET}  Scaffold a new NPC profile from the example template
     {GREEN}install <path>{RESET} Install an NPC profile from a local directory
     {GREEN}test, tests{RESET}    Run the internal framework test suite
 
@@ -254,6 +304,11 @@ def main():
     elif cmd in ["logs", "watch"]: stream_logs()
     elif cmd in ["test", "tests"]: run_framework_tests()
     elif cmd == "list": list_installed_npcs()
+    elif cmd == "create":
+        if len(sys.argv) < 3:
+            print(f"{RED}Error: Missing NPC name. Usage: npc-forge create <name>{RESET}")
+            sys.exit(1)
+        create_npc(sys.argv[2])
     elif cmd == "install":
         if len(sys.argv) < 3:
             print(f"{RED}Error: Missing target package directory path. Usage: npc-forge install <path> [--dev]{RESET}")
@@ -269,7 +324,7 @@ def main():
         target_path = args_without_dev[2]
         install_npc(target_path, dev=is_dev)
     else:
-        print(f"{RED}Unknown: '{cmd}'. Supported: serve, start, stop, restart, watch, logs, tests, install{RESET}")
+        print(f"{RED}Unknown: '{cmd}'. Supported: serve, start, stop, restart, watch, logs, tests, create, install{RESET}")
         sys.exit(1)
 
 if __name__ == "__main__":
