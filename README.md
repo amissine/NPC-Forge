@@ -26,6 +26,7 @@ npc-forge serve          # Starts OpenAi/Copilot compatible API server
 npc-forge stop           # Stops server
 npc-forge reboot         # Reboots server
 npc-forge watch          # Starts server and watch logs in real-time
+npc-forge create         # Creates new NPC using the example profile
 npc-forge install <path> # Installs a new NPC
 ```
 Additional information can be found in the [NPC-Forge CLI](docs/NPC-Forge-cli.md) documentation.
